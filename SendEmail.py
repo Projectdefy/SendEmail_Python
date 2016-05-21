@@ -3,15 +3,21 @@ import smtplib
 # author Andy Dao
 
 # Create these global variables
+username = ''
 password = ''
 subjectTitle = ''
 bodyMsg = ''
+recipient = ''
 
 # Function to grab password, subject title, and body message.
 def userInput():
+    print('Please enter your email address.')
+    global username
+    username = input()
+
     print('Please enter your password to send the email.')
     global password
-    password = input()  # Remember, when using pycharm, add the single quotes for the password.
+    password = input()
 
     print('Enter the subject title.')
     global subjectTitle
@@ -20,6 +26,10 @@ def userInput():
     print('Enter body message.')
     global bodyMsg
     bodyMsg = input()
+
+    print('Who do you wish to send the email to?')
+    global recipient
+    recipient = input()
 
 # Setup the basic server connection
 connectionObj = smtplib.SMTP('smtp.gmail.com', 587)
@@ -31,10 +41,10 @@ connectionObj.starttls()
 userInput()
 
 # Login
-connectionObj.login('andydao10@gmail.com', password)
+connectionObj.login(username, password)
 
 # Setup the email and send the email with the user input info.
-connectionObj.sendmail('andydao10@gmail.com', 'andydao10@gmail.com', 'Subject: ' + subjectTitle + '\n' + bodyMsg)
+connectionObj.sendmail(username, recipient, 'Subject: ' + subjectTitle + '\n' + bodyMsg)
 
 # Done
 print('Message sent')
